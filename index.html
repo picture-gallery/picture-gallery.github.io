@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <title>Min hemmelige side</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .box {
+      background: #1c1c1c;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    }
+
+    h1, h2 {
+      margin-top: 0;
+      text-align: center;
+    }
+
+    .password-area {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    input[type="password"] {
+      padding: 8px 10px;
+      border-radius: 4px;
+      border: 1px solid #444;
+      background: #000;
+      color: #f5f5f5;
+      min-width: 200px;
+    }
+
+    button {
+      padding: 8px 16px;
+      border-radius: 4px;
+      border: none;
+      background: #3b82f6;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #2563eb;
+    }
+
+    .error {
+      color: #f97373;
+      margin-top: 5px;
+      text-align: center;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .gallery img {
+      width: 100%;
+      border-radius: 6px;
+      object-fit: cover;
+      max-height: 300px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Kode-boks -->
+    <div id="loginBox" class="box">
+      <h1>Indtast kode</h1>
+      <div class="password-area">
+        <input id="passwordInput" type="password" placeholder="Skriv koden her">
+        <button onclick="checkPassword()">Gå ind</button>
+        <div id="errorMsg" class="error"></div>
+      </div>
+    </div>
+
+    <!-- Billed-galleri (skjult indtil koden er rigtig) -->
+    <div id="galleryBox" class="box" style="display:none;">
+      <h2>Mine billeder</h2>
+      <div class="gallery">
+        <!-- HER LÆGGER DU DINE BILLEDER IND -->
+        <img src="billede1.jpg" alt="Billede 1">
+        <img src="billede2.jpg" alt="Billede 2">
+        <img src="billede3.jpg" alt="Billede 3">
+        <!-- Du kan bare kopiere linjen ovenover og ændre filnavn -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Sæt din kode her:
+    const RIGTIG_KODE = "Baddies"; // Ændr "1234" til den kode du vil bruge
+
+    function checkPassword() {
+      const input = document.getElementById("passwordInput").value;
+      const errorMsg = document.getElementById("errorMsg");
+
+      if (input === RIGTIG_KODE) {
+        // Skjul login-boksen og vis galleriet
+        document.getElementById("loginBox").style.display = "none";
+        document.getElementById("galleryBox").style.display = "block";
+      } else {
+        errorMsg.textContent = "Forkert kode. Prøv igen.";
+      }
+    }
+
+    // Tryk Enter for at logge ind
+    document.getElementById("passwordInput").addEventListener("keydown", function(e) {
+      if (e.key === "Enter") {
+        checkPassword();
+      }
+    });
+  </script>
+</body>
+</html>
