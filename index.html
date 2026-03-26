@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>Minecraft Guide</title>
 
-<!-- Pixel font -->
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
 <style>
@@ -14,9 +13,9 @@
     color: white;
     background: url("https://images.unsplash.com/photo-1603570419989-0e1a7f7f9e2b") no-repeat center center fixed;
     background-size: cover;
+    overflow-x: hidden;
   }
 
-  /* mørk overlay */
   body::before {
     content: "";
     position: fixed;
@@ -25,9 +24,19 @@
     z-index: -1;
   }
 
+  /* ===== ANIMATION ===== */
+  .fade-in {
+    animation: fadeIn 1.2s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
   /* ===== FORSIDE ===== */
   #frontPage {
-    min-height: 200vh;
+    min-height: 300vh;
     display: flex;
     flex-direction: column;
   }
@@ -48,8 +57,12 @@
     max-width: 420px;
     margin: 40px auto;
     padding: 25px;
-    border-radius: 10px;
     text-align: center;
+    transition: transform 0.3s;
+  }
+
+  .login-box:hover {
+    transform: scale(1.05);
   }
 
   input {
@@ -59,7 +72,6 @@
     background: black;
     border: 2px solid #22c55e;
     color: white;
-    border-radius: 4px;
   }
 
   button {
@@ -67,8 +79,6 @@
     background: #22c55e;
     border: none;
     cursor: pointer;
-    color: black;
-    font-weight: bold;
     width: 100%;
   }
 
@@ -76,9 +86,17 @@
     background: #16a34a;
   }
 
+  .lore {
+    max-width: 800px;
+    margin: 100px auto;
+    font-size: 10px;
+    line-height: 2;
+    color: #d1d5db;
+    text-align: center;
+  }
+
   .footer {
-    margin-top: auto;
-    padding: 60px;
+    padding: 80px;
     text-align: center;
     font-size: 10px;
   }
@@ -102,16 +120,11 @@
     justify-content: center;
   }
 
-  .container {
-    max-width: 900px;
-    width: 100%;
-    padding: 20px;
-  }
-
   .box {
     background: rgba(0,0,0,0.85);
     border: 3px solid #22c55e;
     padding: 20px;
+    animation: fadeIn 1s ease;
   }
 
   .password-area {
@@ -119,10 +132,6 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
-  }
-
-  .error {
-    color: red;
   }
 
   .gallery {
@@ -135,14 +144,32 @@
   .gallery img {
     width: 100%;
     border: 2px solid #22c55e;
+    transition: transform 0.3s;
   }
+
+  .gallery img:hover {
+    transform: scale(1.05);
+  }
+
+  /* 👻 SECRET SKIP KNAP (kode side) */
+  .secret-skip {
+    position: fixed;
+    bottom: 5px;
+    left: 5px;
+    width: 10px;
+    height: 10px;
+    opacity: 0;
+    cursor: pointer;
+  }
+
 </style>
 </head>
 
 <body>
 
 <!-- ===== FORSIDE ===== -->
-<div id="frontPage">
+<div id="frontPage" class="fade-in">
+
   <div class="header">
     <h1>MINECRAFT GUIDE</h1>
     <p>Log ind for at fortsætte</p>
@@ -154,27 +181,43 @@
     <button onclick="fakeLogin()">Log ind</button>
   </div>
 
+  <!-- 🎮 FAKE MINECRAFT TEKST -->
+  <div class="lore">
+    <p>Welcome, player...</p>
+    <p>In this world, secrets are hidden in plain sight.</p>
+    <p>Only those who explore will find the truth.</p>
+    <p>The code is not given — it is discovered.</p>
+    <p>Scroll... and maybe something will reveal itself.</p>
+  </div>
+
+  <div class="lore">
+    <p>Legends speak of a hidden gateway.</p>
+    <p>Buried beyond the visible interface.</p>
+    <p>Only the observant will unlock it.</p>
+  </div>
+
   <div class="footer">
     <p>Kontakt | Vilkår | Privatliv</p>
   </div>
+
 </div>
 
+<!-- 👻 skjult knap -->
 <div class="secret" onclick="goSecret()"></div>
 
-<!-- ===== KODE + GALLERI ===== -->
+<!-- ===== KODE SIDE ===== -->
 <div id="codePage">
-  <div class="container">
 
-    <div id="loginBox" class="box">
-      <h1>Indtast kode <span id="stepText">1/3</span></h1>
-      <div class="password-area">
-        <input id="passwordInput" type="password">
-        <button onclick="checkPassword()">Gå ind</button>
-        <div id="errorMsg" class="error"></div>
-      </div>
+  <div class="box">
+    <h1>Indtast kode <span id="stepText">1/3</span></h1>
+
+    <div class="password-area">
+      <input id="passwordInput" type="password">
+      <button onclick="checkPassword()">Gå ind</button>
+      <div id="errorMsg" style="color:red;"></div>
     </div>
 
-    <div id="galleryBox" class="box" style="display:none;">
+    <div id="galleryBox" style="display:none;">
       <h2>Mine billeder</h2>
       <div class="gallery">
 
@@ -205,13 +248,18 @@
     </div>
 
   </div>
+
 </div>
+
+<!-- 👻 SECRET SKIP -->
+<div class="secret-skip" onclick="skipToLastStep()"></div>
 
 <script>
 function fakeLogin() {
   alert("Login virker ikke 😉");
 }
 
+/* gå til kode side */
 function goSecret() {
   if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 5) {
     document.getElementById("frontPage").style.display = "none";
@@ -220,6 +268,7 @@ function goSecret() {
   }
 }
 
+/* KODER */
 const KODER = [
   "BaddiesALLE_",
   "_gooners_",
@@ -237,7 +286,7 @@ function checkPassword() {
     step++;
 
     if (step === 3) {
-      document.getElementById("loginBox").style.display = "none";
+      document.querySelector(".password-area").style.display = "none";
       document.getElementById("galleryBox").style.display = "block";
       return;
     }
@@ -248,6 +297,14 @@ function checkPassword() {
   } else {
     errorMsg.textContent = "Forkert kode";
   }
+}
+
+/* 👻 skip direkte til sidste */
+function skipToLastStep() {
+  step = 2;
+  document.getElementById("stepText").textContent = "3/3";
+  document.getElementById("errorMsg").textContent = "";
+  document.getElementById("passwordInput").value = "";
 }
 
 document.getElementById("passwordInput").addEventListener("keydown", function(e) {
