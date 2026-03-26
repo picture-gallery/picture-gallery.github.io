@@ -1,236 +1,146 @@
 <!DOCTYPE html>
-<html lang="da">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Minecraft Sign in</title>
+<title>Minecraft Style Login</title>
 
 <style>
   body {
-    font-family: Arial, sans-serif;
-    background-color: #111;
-    color: #f5f5f5;
     margin: 0;
-    padding: 0;
-    display: flex;
-    min-height: 100vh;
-    align-items: center;
-    justify-content: center;
+    font-family: Arial, sans-serif;
+    background: url('minecraft-bg.jpg') center/cover no-repeat fixed;
+    color: #fff;
   }
 
-  /* Screens */
-  .screen {
-    display: none;
+  .overlay {
+    background: rgba(0,0,0,0.55);
     width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0; left: 0;
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
   }
 
-  /* Animation box */
-  .box-anim {
-    width: 150px;
-    height: 150px;
-    background: linear-gradient(135deg, #00c6ff, #0072ff);
+  .container {
+    display: flex;
+    gap: 40px;
+    background: rgba(20,20,20,0.85);
+    padding: 40px;
     border-radius: 12px;
-    animation: float 3s ease-in-out infinite;
+    box-shadow: 0 0 25px rgba(0,0,0,0.6);
+    max-width: 900px;
+    width: 100%;
   }
 
-  @keyframes float {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-25px); }
-    100% { transform: translateY(0); }
+  .left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
   }
 
-  button {
-    margin-top: 25px;
-    padding: 10px 20px;
+  .left h1 {
+    margin: 0 0 10px 0;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .btn {
+    padding: 12px;
     border: none;
     border-radius: 6px;
-    background: #3b82f6;
-    color: #fff;
     font-size: 16px;
     cursor: pointer;
     font-weight: bold;
   }
 
-  button:hover {
-    background: #2563eb;
+  .ms-btn {
+    background: #2d7df4;
+    color: white;
   }
 
-  /* Your layout */
-  .container {
-    max-width: 900px;
-    width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
+  .ms-btn:hover {
+    background: #1f5ec0;
   }
 
-  .box {
-    background: #1c1c1c;
+  .signup-btn {
+    background: #3b3b3b;
+    color: white;
+  }
+
+  .signup-btn:hover {
+    background: #2a2a2a;
+  }
+
+  .right {
+    flex: 1;
+    background: rgba(0,0,0,0.3);
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.5);
   }
 
-  h1, h2 {
+  .right h2 {
     margin-top: 0;
-    text-align: center;
+    font-size: 22px;
   }
 
-  .password-area {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
+  .checklist {
+    margin-top: 15px;
+    line-height: 1.7;
   }
 
-  input[type="password"] {
-    padding: 8px 10px;
-    border-radius: 4px;
-    border: 1px solid #444;
-    background: #000;
-    color: #f5f5f5;
-    min-width: 200px;
+  .checklist span {
+    color: #7CFC00;
+    font-weight: bold;
   }
 
-  .error {
-    color: #f97373;
-    margin-top: 5px;
-    text-align: center;
-  }
-
-  .gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    margin-top: 20px;
-  }
-
-  /* Empty gallery boxes */
-  .placeholder {
-    width: 100%;
-    height: 200px;
-    background: #222;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.4;
+  .small-link {
+    margin-top: 15px;
     font-size: 14px;
+    opacity: 0.8;
   }
 
-  /* Hidden skip button */
-  .secret-btn {
-    position: fixed;
-    bottom: 2px;
-    right: 2px;
-    width: 8px;
-    height: 8px;
-    opacity: 0;
-    cursor: pointer;
-    z-index: 9999;
+  .small-link a {
+    color: #7CFC00;
+    text-decoration: none;
   }
 </style>
 </head>
 
 <body>
 
-<!-- SCREEN 1: Animation -->
-<div id="screen1" class="screen" style="display:flex;">
-  <div class="box-anim"></div>
-  <button id="pauseBtn">Pause animation</button>
-</div>
-
-<!-- SCREEN 2: Your password/gallery layout -->
-<div id="screen2" class="screen">
+<div class="overlay">
   <div class="container">
 
-    <!-- Password box -->
-    <div id="loginBox" class="box">
-      <h1>Indtast kode <span id="stepText">1/3</span></h1>
-      <div class="password-area">
-        <input id="passwordInput" type="password" placeholder="Skriv koden her">
-        <button onclick="checkPassword()">Gå ind</button>
-        <div id="errorMsg" class="error"></div>
+    <!-- LEFT SIDE -->
+    <div class="left">
+      <h1>Welcome</h1>
+
+      <button class="btn ms-btn">SIGN IN WITH Microsoft</button>
+      <button class="btn signup-btn">SIGN UP</button>
+
+      <div class="small-link">
+        Trying to sign in with your old account?  
+        <a href="#">Click here</a>
       </div>
     </div>
 
-    <!-- Gallery (empty placeholders) -->
-    <div id="galleryBox" class="box" style="display:none;">
-      <h2>Mine billeder</h2>
-      <div class="gallery">
-        <div class="placeholder">Billede fjernet</div>
-        <div class="placeholder">Billede fjernet</div>
-        <div class="placeholder">Billede fjernet</div>
-        <div class="placeholder">Billede fjernet</div>
-        <div class="placeholder">Billede fjernet</div>
-        <div class="placeholder">Billede fjernet</div>
+    <!-- RIGHT SIDE -->
+    <div class="right">
+      <h2>Manage your Minecraft experience</h2>
+
+      <div class="checklist">
+        <span>✓</span> Buy games and Realms<br>
+        <span>✓</span> Customize your profile<br>
+        <span>✓</span> Manage Java & Bedrock Realms<br>
+        <span>✓</span> Invite and play with friends
       </div>
     </div>
 
   </div>
-
-  <!-- Hidden skip button -->
-  <div class="secret-btn" onclick="skipToLastStep()"></div>
 </div>
-
-<script>
-  /* Switch from animation → your layout */
-  document.getElementById("pauseBtn").onclick = () => {
-    document.querySelector(".box-anim").style.animationPlayState = "paused";
-    document.getElementById("screen1").style.display = "none";
-    document.getElementById("screen2").style.display = "flex";
-  };
-
-  /* Password logic */
-  const KODER = [
-    "BaddiesALLE_",
-    "_gooners_",
-    "flotte_piger"
-  ];
-
-  let step = 0;
-
-  function checkPassword() {
-    const input = document.getElementById("passwordInput").value;
-    const errorMsg = document.getElementById("errorMsg");
-    const stepText = document.getElementById("stepText");
-
-    if (input === KODER[step]) {
-      step++;
-
-      if (step === 3) {
-        document.getElementById("loginBox").style.display = "none";
-        document.getElementById("galleryBox").style.display = "block";
-        return;
-      }
-
-      stepText.textContent = `${step + 1}/3`;
-      errorMsg.textContent = "";
-      document.getElementById("passwordInput").value = "";
-    } else {
-      errorMsg.textContent = "Forkert kode. Prøv igen.";
-    }
-  }
-
-  /* Hidden skip button */
-  function skipToLastStep() {
-    step = 2;
-    document.getElementById("stepText").textContent = "3/3";
-    document.getElementById("errorMsg").textContent = "";
-    document.getElementById("passwordInput").value = "";
-  }
-
-  document.getElementById("passwordInput").addEventListener("keydown", function(e) {
-    if (e.key === "Enter") {
-      checkPassword();
-    }
-  });
-</script>
 
 </body>
 </html>
