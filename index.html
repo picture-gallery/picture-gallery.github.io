@@ -24,7 +24,6 @@
     z-index: -1;
   }
 
-  /* ===== ANIMATION ===== */
   .fade-in {
     animation: fadeIn 1.2s ease;
   }
@@ -34,7 +33,6 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* ===== FORSIDE ===== */
   #frontPage {
     min-height: 300vh;
     display: flex;
@@ -101,7 +99,6 @@
     font-size: 10px;
   }
 
-  /* 👻 skjult knap */
   .secret {
     position: fixed;
     bottom: 3px;
@@ -112,7 +109,6 @@
     cursor: pointer;
   }
 
-  /* ===== KODE SIDE ===== */
   #codePage {
     display: none;
     min-height: 100vh;
@@ -151,7 +147,6 @@
     transform: scale(1.05);
   }
 
-  /* 👻 SECRET SKIP KNAP (kode side) */
   .secret-skip {
     position: fixed;
     bottom: 5px;
@@ -167,7 +162,6 @@
 
 <body>
 
-<!-- ===== FORSIDE ===== -->
 <div id="frontPage" class="fade-in">
 
   <div class="header">
@@ -181,19 +175,24 @@
     <button onclick="fakeLogin()">Log ind</button>
   </div>
 
-  <!-- 🎮 FAKE MINECRAFT TEKST -->
+  <!-- DANSK MINECRAFT TEKST -->
   <div class="lore">
-    <p>Welcome, player...</p>
-    <p>In this world, secrets are hidden in plain sight.</p>
-    <p>Only those who explore will find the truth.</p>
-    <p>The code is not given — it is discovered.</p>
-    <p>Scroll... and maybe something will reveal itself.</p>
+    <p>Minecraft er et sandbox-spil, hvor du selv bestemmer hvordan du vil spille.</p>
+    <p>Du kan bygge, udforske og overleve i en verden lavet af blokke.</p>
+    <p>Samle ressourcer, craft værktøjer og byg dine egne strukturer.</p>
+    <p>Om dagen kan du udforske verden, og om natten skal du være klar på fjender.</p>
   </div>
 
   <div class="lore">
-    <p>Legends speak of a hidden gateway.</p>
-    <p>Buried beyond the visible interface.</p>
-    <p>Only the observant will unlock it.</p>
+    <p>Der findes mange forskellige biomer som skove, ørkener og bjerge.</p>
+    <p>Hver biome har sine egne materialer og muligheder.</p>
+    <p>Du kan også finde landsbyer og handle med villagers.</p>
+  </div>
+
+  <div class="lore">
+    <p>I survival mode skal du holde øje med din sult og dit helbred.</p>
+    <p>I creative mode har du uendelige ressourcer og kan bygge frit.</p>
+    <p>Minecraft giver dig frihed til at skabe præcis det du vil.</p>
   </div>
 
   <div class="footer">
@@ -202,10 +201,8 @@
 
 </div>
 
-<!-- 👻 skjult knap -->
 <div class="secret" onclick="goSecret()"></div>
 
-<!-- ===== KODE SIDE ===== -->
 <div id="codePage">
 
   <div class="box">
@@ -221,7 +218,6 @@
       <h2>Mine billeder</h2>
       <div class="gallery">
 
-        <!-- ALLE DINE BILLEDER -->
         <img src="{5446C230-0489-472C-B513-EF53E6C5E192}.png">
         <img src="{EC87D163-A0E2-4D09-B36D-7D1DF698375F}.png">
         <img src="{51CC3ACC-033E-4C8E-B8C4-D3B74745171E}.png">
@@ -251,7 +247,6 @@
 
 </div>
 
-<!-- 👻 SECRET SKIP -->
 <div class="secret-skip" onclick="skipToLastStep()"></div>
 
 <script>
@@ -259,7 +254,6 @@ function fakeLogin() {
   alert("Login virker ikke 😉");
 }
 
-/* gå til kode side */
 function goSecret() {
   if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 5) {
     document.getElementById("frontPage").style.display = "none";
@@ -268,7 +262,6 @@ function goSecret() {
   }
 }
 
-/* KODER */
 const KODER = [
   "BaddiesALLE_",
   "_gooners_",
@@ -299,7 +292,6 @@ function checkPassword() {
   }
 }
 
-/* 👻 skip direkte til sidste */
 function skipToLastStep() {
   step = 2;
   document.getElementById("stepText").textContent = "3/3";
