@@ -1,106 +1,155 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-  <meta charset="UTF-8">
-  <title>Minecraft how to guide</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #111;
-      color: #f5f5f5;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      min-height: 100vh;
-      align-items: center;
-      justify-content: center;
-    }
+<meta charset="UTF-8">
+<title>Minecraft how to guide</title>
 
-    .container {
-      max-width: 900px;
-      width: 100%;
-      padding: 20px;
-      box-sizing: border-box;
-    }
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #111;
+    color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+  }
 
-    .box {
-      background: #1c1c1c;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
-    }
+  /* Screens */
+  .screen {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0; left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
 
-    h1, h2 {
-      margin-top: 0;
-      text-align: center;
-    }
+  /* Animation box */
+  .box-anim {
+    width: 150px;
+    height: 150px;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    border-radius: 12px;
+    animation: float 3s ease-in-out infinite;
+  }
 
-    .password-area {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      align-items: center;
-    }
+  @keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-25px); }
+    100% { transform: translateY(0); }
+  }
 
-    input[type="password"] {
-      padding: 8px 10px;
-      border-radius: 4px;
-      border: 1px solid #444;
-      background: #000;
-      color: #f5f5f5;
-      min-width: 200px;
-    }
+  button {
+    margin-top: 25px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    background: #3b82f6;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+  }
 
-    button {
-      padding: 8px 16px;
-      border-radius: 4px;
-      border: none;
-      background: #3b82f6;
-      color: white;
-      cursor: pointer;
-      font-weight: bold;
-    }
+  button:hover {
+    background: #2563eb;
+  }
 
-    button:hover {
-      background: #2563eb;
-    }
+  /* Your layout */
+  .container {
+    max-width: 900px;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+  }
 
-    .error {
-      color: #f97373;
-      margin-top: 5px;
-      text-align: center;
-    }
+  .box {
+    background: #1c1c1c;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  }
 
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-      margin-top: 20px;
-    }
+  h1, h2 {
+    margin-top: 0;
+    text-align: center;
+  }
 
-    .gallery img {
-      width: 100%;
-      border-radius: 6px;
-      object-fit: cover;
-      max-height: 300px;
-    }
+  .password-area {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
 
-    /* 🔥 SUPER SKJULT KNAP */
-    .secret-btn {
-      position: fixed;
-      bottom: 2px;
-      right: 2px;
-      width: 8px;
-      height: 8px;
-      opacity: 0;
-      cursor: pointer;
-      z-index: 9999;
-    }
-  </style>
+  input[type="password"] {
+    padding: 8px 10px;
+    border-radius: 4px;
+    border: 1px solid #444;
+    background: #000;
+    color: #f5f5f5;
+    min-width: 200px;
+  }
+
+  .error {
+    color: #f97373;
+    margin-top: 5px;
+    text-align: center;
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+  }
+
+  /* Empty gallery boxes */
+  .placeholder {
+    width: 100%;
+    height: 200px;
+    background: #222;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.4;
+    font-size: 14px;
+  }
+
+  /* Hidden skip button */
+  .secret-btn {
+    position: fixed;
+    bottom: 2px;
+    right: 2px;
+    width: 8px;
+    height: 8px;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 9999;
+  }
+</style>
 </head>
+
 <body>
+
+<!-- SCREEN 1: Animation -->
+<div id="screen1" class="screen" style="display:flex;">
+  <div class="box-anim"></div>
+  <button id="pauseBtn">Pause animation</button>
+</div>
+
+<!-- SCREEN 2: Your password/gallery layout -->
+<div id="screen2" class="screen">
   <div class="container">
-    <!-- Kode-boks -->
+
+    <!-- Password box -->
     <div id="loginBox" class="box">
       <h1>Indtast kode <span id="stepText">1/3</span></h1>
       <div class="password-area">
@@ -110,82 +159,81 @@
       </div>
     </div>
 
-    <!-- Billed-galleri -->
+    <!-- Gallery (empty placeholders) -->
     <div id="galleryBox" class="box" style="display:none;">
       <h2>Mine billeder</h2>
       <div class="gallery">
-        <img src="{5446C230-0489-472C-B513-EF53E6C5E192}.png">
-        <img src="{EC87D163-A0E2-4D09-B36D-7D1DF698375F}.png">
-        <img src="{51CC3ACC-033E-4C8E-B8C4-D3B74745171E}.png">
-        <img src="{301C215B-691C-4914-89FD-CCA459AFF844}.png">
-        <img src="{E8297579-B829-41FC-A012-6FE5AF74303D}.png">
-        <img src="{CDE4B430-077B-4280-95BC-E1C51710919C}.png">
-        <img src="{FBAF3C68-6261-4F02-B51C-DAC689B13F19}.png">
-        <img src="Alberte.png">
-        <img src="alberte bikini.png">
-        <img src="chat_edit_image_20260325_213008.png">
-        <img src="alberte 2.jpg">
-        <img src="jasmin.png">
-        <img src="chat_edit_image_20260325_212656.png">
-        <img src="chat_edit_image_20260325_211619.png">
-        <img src="awdjawdji.jpg">
-        <img src="Task-76974929-1-1.png">
-        <img src="wdjawjdia.jpg">
-        <img src="Task-76973840-2-2.png">
-        <img src="IMG_3594.png">
-        <img src="{F35AE000-EF2F-4DE7-AB8F-898EB2CCCCB9}.png">
-        <img src="{CC9150ED-27FF-42AB-8761-EC46EA949F20}.png">
+        <div class="placeholder">Billede fjernet</div>
+        <div class="placeholder">Billede fjernet</div>
+        <div class="placeholder">Billede fjernet</div>
+        <div class="placeholder">Billede fjernet</div>
+        <div class="placeholder">Billede fjernet</div>
+        <div class="placeholder">Billede fjernet</div>
       </div>
     </div>
+
   </div>
 
-  <!-- 👇 HEMMELIG KNAP (udenfor boksen) -->
+  <!-- Hidden skip button -->
   <div class="secret-btn" onclick="skipToLastStep()"></div>
+</div>
 
-  <script>
-    const KODER = [
-      "BaddiesALLE_",
-      "_gooners_",
-      "flotte_piger"
-    ];
+<script>
+  /* Switch from animation → your layout */
+  document.getElementById("pauseBtn").onclick = () => {
+    document.querySelector(".box-anim").style.animationPlayState = "paused";
+    document.getElementById("screen1").style.display = "none";
+    document.getElementById("screen2").style.display = "flex";
+  };
 
-    let step = 0;
+  /* Password logic */
+  const KODER = [
+    "BaddiesALLE_",
+    "_gooners_",
+    "flotte_piger"
+  ];
 
-    function checkPassword() {
-      const input = document.getElementById("passwordInput").value;
-      const errorMsg = document.getElementById("errorMsg");
-      const stepText = document.getElementById("stepText");
+  let step = 0;
 
-      if (input === KODER[step]) {
-        step++;
+  function checkPassword() {
+    const input = document.getElementById("passwordInput").value;
+    const errorMsg = document.getElementById("errorMsg");
+    const stepText = document.getElementById("stepText");
 
-        if (step === 3) {
-          document.getElementById("loginBox").style.display = "none";
-          document.getElementById("galleryBox").style.display = "block";
-          return;
-        }
+    if (input === KODER[step]) {
+      step++;
 
-        stepText.textContent = `${step + 1}/3`;
-        errorMsg.textContent = "";
-        document.getElementById("passwordInput").value = "";
-      } else {
-        errorMsg.textContent = "Forkert kode. Prøv igen.";
+      if (step === 3) {
+        document.getElementById("loginBox").style.display = "none";
+        document.getElementById("galleryBox").style.display = "block";
+        return;
       }
-    }
 
-    // 🔥 SPRING DIREKTE TIL SIDSTE KODE
-    function skipToLastStep() {
-      step = 2; // går direkte til 3/3
-      document.getElementById("stepText").textContent = "3/3";
-      document.getElementById("errorMsg").textContent = "";
+      stepText.textContent = `${step + 1}/3`;
+      errorMsg.textContent = "";
       document.getElementById("passwordInput").value = "";
+    } else {
+      errorMsg.textContent = "Forkert kode. Prøv igen.";
     }
+  }
 
-    document.getElementById("passwordInput").addEventListener("keydown", function(e) {
-      if (e.key === "Enter") {
-        checkPassword();
-      }
-    });
-  </script>
+  /* Hidden skip button */
+  function skipToLastStep() {
+    step = 2;
+    document.getElementById("stepText").textContent = "3/3";
+    document.getElementById("errorMsg").textContent = "";
+    document.getElementById("passwordInput").value = "";
+  }
+
+  document.getElementById("passwordInput").addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+      checkPassword();
+    }
+  });
+</script>
+
 </body>
 </html>
+
+
+
