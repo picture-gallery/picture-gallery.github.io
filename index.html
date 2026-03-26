@@ -1,149 +1,193 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da">
 <head>
-<meta charset="UTF-8">
-<title>Minecraft Style Login</title>
+  <meta charset="UTF-8">
+  <title>Minecraft how to guide</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+    }
 
-<style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: url('minecraft-bg.jpg') center/cover no-repeat fixed;
-    color: #fff;
-  }
+    .container {
+      max-width: 900px;
+      width: 100%;
+      padding: 20px;
+      box-sizing: border-box;
+    }
 
-  .overlay {
-    background: rgba(0,0,0,0.55);
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    box-sizing: border-box;
-  }
+    .box {
+      background: #1c1c1c;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    }
 
-  .container {
-    display: flex;
-    gap: 40px;
-    background: rgba(20,20,20,0.85);
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 0 25px rgba(0,0,0,0.6);
-    max-width: 900px;
-    width: 100%;
-  }
+    h1, h2 {
+      margin-top: 0;
+      text-align: center;
+    }
 
-  .left {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
+    .password-area {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
 
-  .left h1 {
-    margin: 0 0 10px 0;
-    font-size: 28px;
-    font-weight: bold;
-  }
+    input[type="password"] {
+      padding: 8px 10px;
+      border-radius: 4px;
+      border: 1px solid #444;
+      background: #000;
+      color: #f5f5f5;
+      min-width: 200px;
+    }
 
-  .btn {
-    padding: 12px;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    cursor: pointer;
-    font-weight: bold;
-  }
+    button {
+      padding: 8px 16px;
+      border-radius: 4px;
+      border: none;
+      background: #3b82f6;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
 
-  .ms-btn {
-    background: #2d7df4;
-    color: white;
-  }
+    button:hover {
+      background: #2563eb;
+    }
 
-  .ms-btn:hover {
-    background: #1f5ec0;
-  }
+    .error {
+      color: #f97373;
+      margin-top: 5px;
+      text-align: center;
+    }
 
-  .signup-btn {
-    background: #3b3b3b;
-    color: white;
-  }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
 
-  .signup-btn:hover {
-    background: #2a2a2a;
-  }
+    .gallery img {
+      width: 100%;
+      border-radius: 6px;
+      object-fit: cover;
+      max-height: 300px;
+    }
 
-  .right {
-    flex: 1;
-    background: rgba(0,0,0,0.3);
-    padding: 20px;
-    border-radius: 8px;
-  }
-
-  .right h2 {
-    margin-top: 0;
-    font-size: 22px;
-  }
-
-  .checklist {
-    margin-top: 15px;
-    line-height: 1.7;
-  }
-
-  .checklist span {
-    color: #7CFC00;
-    font-weight: bold;
-  }
-
-  .small-link {
-    margin-top: 15px;
-    font-size: 14px;
-    opacity: 0.8;
-  }
-
-  .small-link a {
-    color: #7CFC00;
-    text-decoration: none;
-  }
-</style>
+    /* 🔥 SUPER SKJULT KNAP */
+    .secret-btn {
+      position: fixed;
+      bottom: 2px;
+      right: 2px;
+      width: 8px;
+      height: 8px;
+      opacity: 0;
+      cursor: pointer;
+      z-index: 9999;
+    }
+  </style>
 </head>
-
 <body>
-
-<div class="overlay">
   <div class="container">
-
-    <!-- LEFT SIDE -->
-    <div class="left">
-      <h1>Welcome</h1>
-
-      <button class="btn ms-btn">SIGN IN WITH Microsoft</button>
-      <button class="btn signup-btn">SIGN UP</button>
-
-      <div class="small-link">
-        Trying to sign in with your old account?  
-        <a href="#">Click here</a>
+    <!-- Kode-boks -->
+    <div id="loginBox" class="box">
+      <h1>Indtast kode <span id="stepText">1/3</span></h1>
+      <div class="password-area">
+        <input id="passwordInput" type="password" placeholder="Skriv koden her">
+        <button onclick="checkPassword()">Gå ind</button>
+        <div id="errorMsg" class="error"></div>
       </div>
     </div>
 
-    <!-- RIGHT SIDE -->
-    <div class="right">
-      <h2>Manage your Minecraft experience</h2>
-
-      <div class="checklist">
-        <span>✓</span> Buy games and Realms<br>
-        <span>✓</span> Customize your profile<br>
-        <span>✓</span> Manage Java & Bedrock Realms<br>
-        <span>✓</span> Invite and play with friends
+    <!-- Billed-galleri -->
+    <div id="galleryBox" class="box" style="display:none;">
+      <h2>Mine billeder</h2>
+      <div class="gallery">
+        <img src="{5446C230-0489-472C-B513-EF53E6C5E192}.png">
+        <img src="{EC87D163-A0E2-4D09-B36D-7D1DF698375F}.png">
+        <img src="{51CC3ACC-033E-4C8E-B8C4-D3B74745171E}.png">
+        <img src="{301C215B-691C-4914-89FD-CCA459AFF844}.png">
+        <img src="{E8297579-B829-41FC-A012-6FE5AF74303D}.png">
+        <img src="{CDE4B430-077B-4280-95BC-E1C51710919C}.png">
+        <img src="{FBAF3C68-6261-4F02-B51C-DAC689B13F19}.png">
+        <img src="Alberte.png">
+        <img src="alberte bikini.png">
+        <img src="chat_edit_image_20260325_213008.png">
+        <img src="alberte 2.jpg">
+        <img src="jasmin.png">
+        <img src="chat_edit_image_20260325_212656.png">
+        <img src="chat_edit_image_20260325_211619.png">
+        <img src="awdjawdji.jpg">
+        <img src="Task-76974929-1-1.png">
+        <img src="wdjawjdia.jpg">
+        <img src="Task-76973840-2-2.png">
+        <img src="IMG_3594.png">
+        <img src="{F35AE000-EF2F-4DE7-AB8F-898EB2CCCCB9}.png">
+        <img src="{CC9150ED-27FF-42AB-8761-EC46EA949F20}.png">
       </div>
     </div>
-
   </div>
-</div>
 
+  <!-- 👇 HEMMELIG KNAP (udenfor boksen) -->
+  <div class="secret-btn" onclick="skipToLastStep()"></div>
+
+  <script>
+    const KODER = [
+      "BaddiesALLE_",
+      "_gooners_",
+      "flotte_piger"
+    ];
+
+    let step = 0;
+
+    function checkPassword() {
+      const input = document.getElementById("passwordInput").value;
+      const errorMsg = document.getElementById("errorMsg");
+      const stepText = document.getElementById("stepText");
+
+      if (input === KODER[step]) {
+        step++;
+
+        if (step === 3) {
+          document.getElementById("loginBox").style.display = "none";
+          document.getElementById("galleryBox").style.display = "block";
+          return;
+        }
+
+        stepText.textContent = `${step + 1}/3`;
+        errorMsg.textContent = "";
+        document.getElementById("passwordInput").value = "";
+      } else {
+        errorMsg.textContent = "Forkert kode. Prøv igen.";
+      }
+    }
+
+    // 🔥 SPRING DIREKTE TIL SIDSTE KODE
+    function skipToLastStep() {
+      step = 2; // går direkte til 3/3
+      document.getElementById("stepText").textContent = "3/3";
+      document.getElementById("errorMsg").textContent = "";
+      document.getElementById("passwordInput").value = "";
+    }
+
+    document.getElementById("passwordInput").addEventListener("keydown", function(e) {
+      if (e.key === "Enter") {
+        checkPassword();
+      }
+    });
+  </script>
 </body>
 </html>
-
-
 
