@@ -1,102 +1,227 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-  <meta charset="UTF-8">
-  <title>Minecraft Login</title>
+<meta charset="UTF-8">
+<title>Minecraft Guide</title>
 
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: url("https://www.minecraft.net/content/dam/games/minecraft/backgrounds/bg-wool-dark.png") repeat;
-      font-family: Arial, sans-serif;
-      color: white;
-      height: 200vh; /* så man kan scrolle */
-    }
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #020617;
+    color: white;
+  }
 
-    .center {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      flex-direction: column;
-    }
+  /* ===== FORSIDE ===== */
+  #frontPage {
+    min-height: 200vh;
+    display: flex;
+    flex-direction: column;
+  }
 
-    .login-box {
-      background: rgba(0,0,0,0.65);
-      padding: 40px;
-      border-radius: 10px;
-      width: 350px;
-      text-align: center;
-      border: 2px solid #3a3a3a;
-      box-shadow: 0 0 20px rgba(0,0,0,0.7);
-    }
+  .header {
+    text-align: center;
+    padding: 40px 20px 20px;
+  }
 
-    h1 {
-      font-size: 28px;
-      margin-bottom: 20px;
-    }
+  .header h1 {
+    font-size: 40px;
+    color: #22c55e;
+  }
 
-    input {
-      width: 90%;
-      padding: 12px;
-      margin-bottom: 15px;
-      border-radius: 5px;
-      border: 2px solid #555;
-      background: #000;
-      color: white;
-      font-size: 16px;
-    }
+  .login-box {
+    background: #111827;
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
+  }
 
-    button {
-      width: 95%;
-      padding: 12px;
-      background: #00a82d;
-      border: none;
-      border-radius: 5px;
-      color: white;
-      font-size: 18px;
-      cursor: pointer;
-      font-weight: bold;
-    }
+  input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    background: #020617;
+    border: 1px solid #374151;
+    color: white;
+    border-radius: 6px;
+  }
 
-    button:hover {
-      background: #009425;
-    }
+  button {
+    padding: 10px;
+    background: #22c55e;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: white;
+    width: 100%;
+  }
 
-    /* Usynlig mikro-knap */
-    .secret-btn {
-      position: fixed;
-      bottom: 3px;
-      right: 3px;
-      width: 12px;
-      height: 12px;
-      opacity: 0;
-      cursor: pointer;
-      z-index: 9999;
-    }
-  </style>
+  .footer {
+    margin-top: auto;
+    padding: 60px;
+    text-align: center;
+    color: #9ca3af;
+  }
+
+  /* 👻 skjult knap */
+  .secret {
+    position: fixed;
+    bottom: 3px;
+    right: 3px;
+    width: 10px;
+    height: 10px;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  /* ===== KODE SIDE ===== */
+  #codePage {
+    display: none;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .container {
+    max-width: 900px;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .box {
+    background: #1c1c1c;
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  .password-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .error {
+    color: red;
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+  }
+
+  .gallery img {
+    width: 100%;
+    border-radius: 6px;
+  }
+</style>
 </head>
 
 <body>
 
-  <div class="center">
-    <div class="login-box">
-      <h1>Log ind på din Minecraft konto</h1>
-      <input type="text" placeholder="Email">
-      <input type="password" placeholder="Password">
-      <button>Log ind</button>
-    </div>
+<!-- ===== FORSIDE ===== -->
+<div id="frontPage">
+  <div class="header">
+    <h1>MINECRAFT GUIDE</h1>
+    <p>Log ind for at fortsætte</p>
   </div>
 
-  <!-- Usynlig knap -->
-  <div class="secret-btn" onclick="goRealPage()"></div>
+  <div class="login-box">
+    <input type="text" placeholder="Email">
+    <input type="password" placeholder="Adgangskode">
+    <button onclick="fakeLogin()">Log ind</button>
+  </div>
 
-  <script>
-    function goRealPage() {
-      window.location.href = "https://picture-gallery.github.io";
+  <div class="footer">
+    <p>Kontakt | Vilkår | Privatliv</p>
+  </div>
+</div>
+
+<!-- 👻 skjult knap -->
+<div class="secret" onclick="goSecret()"></div>
+
+<!-- ===== KODE + GALLERI ===== -->
+<div id="codePage">
+  <div class="container">
+
+    <div id="loginBox" class="box">
+      <h1>Indtast kode <span id="stepText">1/3</span></h1>
+      <div class="password-area">
+        <input id="passwordInput" type="password">
+        <button onclick="checkPassword()">Gå ind</button>
+        <div id="errorMsg" class="error"></div>
+      </div>
+    </div>
+
+    <div id="galleryBox" class="box" style="display:none;">
+      <h2>Mine billeder</h2>
+      <div class="gallery">
+        <img src="Alberte.png">
+        <img src="alberte bikini.png">
+        <img src="alberte 2.jpg">
+        <img src="jasmin.png">
+        <img src="IMG_3594.png">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function fakeLogin() {
+  alert("Login virker ikke 😉");
+}
+
+/* 🔥 gå til kode side */
+function goSecret() {
+  if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 5) {
+    document.getElementById("frontPage").style.display = "none";
+    document.getElementById("codePage").style.display = "flex";
+    window.scrollTo(0,0);
+  }
+}
+
+/* ===== KODE SYSTEM ===== */
+const KODER = [
+  "BaddiesALLE_",
+  "_gooners_",
+  "flotte_piger"
+];
+
+let step = 0;
+
+function checkPassword() {
+  const input = document.getElementById("passwordInput").value;
+  const errorMsg = document.getElementById("errorMsg");
+  const stepText = document.getElementById("stepText");
+
+  if (input === KODER[step]) {
+    step++;
+
+    if (step === 3) {
+      document.getElementById("loginBox").style.display = "none";
+      document.getElementById("galleryBox").style.display = "block";
+      return;
     }
-  </script>
+
+    stepText.textContent = `${step + 1}/3`;
+    errorMsg.textContent = "";
+    document.getElementById("passwordInput").value = "";
+  } else {
+    errorMsg.textContent = "Forkert kode";
+  }
+}
+
+document.getElementById("passwordInput").addEventListener("keydown", function(e) {
+  if (e.key === "Enter") {
+    checkPassword();
+  }
+});
+</script>
 
 </body>
 </html>
