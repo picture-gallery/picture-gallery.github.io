@@ -117,6 +117,7 @@
   }
 
   .box {
+    position: relative;
     background: rgba(0,0,0,0.85);
     border: 3px solid #22c55e;
     padding: 20px;
@@ -157,6 +158,17 @@
     cursor: pointer;
   }
 
+  /* Ny hemmelig knap i galleriet */
+  .secret-top {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 15px;
+    height: 15px;
+    opacity: 0;
+    cursor: pointer;
+  }
+
 </style>
 </head>
 
@@ -175,7 +187,6 @@
     <button onclick="fakeLogin()">Log ind</button>
   </div>
 
-  <!-- DANSK MINECRAFT TEKST -->
   <div class="lore">
     <p>Minecraft er et sandbox-spil, hvor du selv bestemmer hvordan du vil spille.</p>
     <p>Du kan bygge, udforske og overleve i en verden lavet af blokke.</p>
@@ -216,8 +227,8 @@
 
     <div id="galleryBox" style="display:none;">
       <h2>Mine billeder</h2>
+      <div class="secret-top" onclick="openHiddenPage()"></div> <!-- Ny hemmelig knap -->
       <div class="gallery">
-
         <img src="{5446C230-0489-472C-B513-EF53E6C5E192}.png"> 
         <img src="{EC87D163-A0E2-4D09-B36D-7D1DF698375F}.png"> 
         <img src="{51CC3ACC-033E-4C8E-B8C4-D3B74745171E}.png"> 
@@ -228,23 +239,36 @@
         <img src="Alberte.png"> 
         <img src="alberte bikini.png"> 
         <img src="chat_edit_image_20260325_213008.png"> 
-        
         <img src="jasmin.png"> 
         <img src="chat_edit_image_20260325_212656.png"> 
         <img src="chat_edit_image_20260325_211619.png"> 
         <img src="awdjawdji.jpg"> 
         <img src="Task-76974929-1-1.png"> 
-        
-        
         <img src="IMG_3594.png"> 
         <img src="{F35AE000-EF2F-4DE7-AB8F-898EB2CCCCB9}.png"> 
         <img src="{CC9150ED-27FF-42AB-8761-EC46EA949F20}.png"> 
-
       </div>
     </div>
 
   </div>
 
+</div>
+
+<div id="hiddenPage" style="display:none; min-height:100vh; justify-content:center; align-items:center;">
+  <div class="box">
+    <h1>Indtast hemmelig kode</h1>
+    <input id="hiddenInput" type="password">
+    <button onclick="checkHidden()">Gå ind</button>
+    <div id="hiddenError" style="color:red;"></div>
+
+    <div id="hiddenGallery" style="display:none;">
+      <h2>Secret billeder</h2>
+      <div class="gallery">
+        <img src="secret1.png">
+        <img src="secret2.png">
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="secret-skip" onclick="skipToLastStep()"></div>
@@ -304,6 +328,26 @@ document.getElementById("passwordInput").addEventListener("keydown", function(e)
     checkPassword();
   }
 });
+
+// Ny hemmelig side funktioner
+function openHiddenPage() {
+  document.getElementById("codePage").style.display = "none";
+  document.getElementById("hiddenPage").style.display = "flex";
+}
+
+function checkHidden() {
+  const input = document.getElementById("hiddenInput").value;
+  const error = document.getElementById("hiddenError");
+
+  if (input === "Helt_Nøgne") {
+    document.getElementById("hiddenGallery").style.display = "block";
+    document.getElementById("hiddenInput").style.display = "none";
+    error.textContent = "";
+  } else {
+    error.textContent = "Forkert kode";
+  }
+}
+
 </script>
 
 </body>
