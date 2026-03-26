@@ -4,12 +4,25 @@
 <meta charset="UTF-8">
 <title>Minecraft Guide</title>
 
+<!-- Pixel font -->
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
 <style>
   body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: #020617;
+    font-family: 'Press Start 2P', Arial;
     color: white;
+    background: url("https://images.unsplash.com/photo-1603570419989-0e1a7f7f9e2b") no-repeat center center fixed;
+    background-size: cover;
+  }
+
+  /* mørk overlay */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: -1;
   }
 
   /* ===== FORSIDE ===== */
@@ -21,17 +34,18 @@
 
   .header {
     text-align: center;
-    padding: 40px 20px 20px;
+    padding: 60px 20px 20px;
   }
 
   .header h1 {
-    font-size: 40px;
-    color: #22c55e;
+    font-size: 30px;
+    color: #4ade80;
   }
 
   .login-box {
-    background: #111827;
-    max-width: 400px;
+    background: rgba(0,0,0,0.8);
+    border: 3px solid #22c55e;
+    max-width: 420px;
     margin: 40px auto;
     padding: 25px;
     border-radius: 10px;
@@ -42,27 +56,31 @@
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
-    background: #020617;
-    border: 1px solid #374151;
+    background: black;
+    border: 2px solid #22c55e;
     color: white;
-    border-radius: 6px;
+    border-radius: 4px;
   }
 
   button {
     padding: 10px;
     background: #22c55e;
     border: none;
-    border-radius: 6px;
     cursor: pointer;
-    color: white;
+    color: black;
+    font-weight: bold;
     width: 100%;
+  }
+
+  button:hover {
+    background: #16a34a;
   }
 
   .footer {
     margin-top: auto;
     padding: 60px;
     text-align: center;
-    color: #9ca3af;
+    font-size: 10px;
   }
 
   /* 👻 skjult knap */
@@ -91,9 +109,9 @@
   }
 
   .box {
-    background: #1c1c1c;
+    background: rgba(0,0,0,0.85);
+    border: 3px solid #22c55e;
     padding: 20px;
-    border-radius: 8px;
   }
 
   .password-area {
@@ -116,7 +134,7 @@
 
   .gallery img {
     width: 100%;
-    border-radius: 6px;
+    border: 2px solid #22c55e;
   }
 </style>
 </head>
@@ -141,7 +159,6 @@
   </div>
 </div>
 
-<!-- 👻 skjult knap -->
 <div class="secret" onclick="goSecret()"></div>
 
 <!-- ===== KODE + GALLERI ===== -->
@@ -160,11 +177,30 @@
     <div id="galleryBox" class="box" style="display:none;">
       <h2>Mine billeder</h2>
       <div class="gallery">
+
+        <!-- ALLE DINE BILLEDER -->
+        <img src="{5446C230-0489-472C-B513-EF53E6C5E192}.png">
+        <img src="{EC87D163-A0E2-4D09-B36D-7D1DF698375F}.png">
+        <img src="{51CC3ACC-033E-4C8E-B8C4-D3B74745171E}.png">
+        <img src="{301C215B-691C-4914-89FD-CCA459AFF844}.png">
+        <img src="{E8297579-B829-41FC-A012-6FE5AF74303D}.png">
+        <img src="{CDE4B430-077B-4280-95BC-E1C51710919C}.png">
+        <img src="{FBAF3C68-6261-4F02-B51C-DAC689B13F19}.png">
         <img src="Alberte.png">
         <img src="alberte bikini.png">
+        <img src="chat_edit_image_20260325_213008.png">
         <img src="alberte 2.jpg">
         <img src="jasmin.png">
+        <img src="chat_edit_image_20260325_212656.png">
+        <img src="chat_edit_image_20260325_211619.png">
+        <img src="awdjawdji.jpg">
+        <img src="Task-76974929-1-1.png">
+        <img src="wdjawjdia.jpg">
+        <img src="Task-76973840-2-2.png">
         <img src="IMG_3594.png">
+        <img src="{F35AE000-EF2F-4DE7-AB8F-898EB2CCCCB9}.png">
+        <img src="{CC9150ED-27FF-42AB-8761-EC46EA949F20}.png">
+
       </div>
     </div>
 
@@ -176,7 +212,6 @@ function fakeLogin() {
   alert("Login virker ikke 😉");
 }
 
-/* 🔥 gå til kode side */
 function goSecret() {
   if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 5) {
     document.getElementById("frontPage").style.display = "none";
@@ -185,7 +220,6 @@ function goSecret() {
   }
 }
 
-/* ===== KODE SYSTEM ===== */
 const KODER = [
   "BaddiesALLE_",
   "_gooners_",
